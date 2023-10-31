@@ -1,7 +1,9 @@
 #!/usr/bin/python3
 
+
 import datetime
 import uuid
+
 
 class BaseModel:
     def __init__(self):
@@ -10,8 +12,10 @@ class BaseModel:
 
     def save(self):
         self.updated_at = datetime.datetime.now()
+
     def __str__(self):
         return f"[{self.__class__.__name__}] ({self.id}) {self.dict}"
+
     def to_dict(self):
         data = self.dict__copy()
         data['__class__'] = self.__class__.__name__
