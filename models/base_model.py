@@ -17,3 +17,4 @@ class BaseModel:
         data['__class__'] = self.__class__.__name__
         data['__created_at__'] = data['__created_at__'].isoformat()
         data['__updated_at__'] = data['__updated_at__'].isoformat()
+        return data
