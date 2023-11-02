@@ -6,6 +6,7 @@ to deserialiaze and serialize Models objects
 '''
 
 import json
+from models.user import User
 from models.base_model import BaseModel
 
 
@@ -15,7 +16,15 @@ class FileStorage:
     '''
 
     __file_path = 'file.json'
-    __objects = {}
+    __objects = {
+        "BaseModel": BaseModel,
+        "User": User,
+        "State": State,
+        "City": City,
+        "Place": Place,
+        "Amenity": Amenity,
+        "Review": Review
+    }
 
     def all(self):
         '''
