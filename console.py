@@ -8,11 +8,15 @@ from models import storage
 from models.base_model import BaseModel
 
 
+
 class HBNBCommand(cmd.Cmd):
     """
     HBNBC
     """
     prompt = "(hbnb)"
+    classes = {
+        "BaseModel": BaseModel,
+    }
 
     def do_quit(self, arg):
         """
@@ -39,10 +43,10 @@ class HBNBCommand(cmd.Cmd):
         args = arg.split()
         if len(args) == 0:
             print("**class name missing**")
-        elif args[0] not in models.classes:
+        elif args[0] not in self.classes:
             print("** class doesn't exist **")
         else:
-            new_instance = models.classes[args[0]]()
+            new_instance = self.classes[args[0]]()
             new_instance.save()
             print(new_instance.id)
 
@@ -53,16 +57,16 @@ class HBNBCommand(cmd.Cmd):
         args = arg.split()
         if len(args) == 0:
             print("** class name missing **")
-        elif args[0] not in models.classes:
+        elif args[0] not in self.classes:
             print("** class doesn't exist **")
         elif len(args) == 1:
             print("** instance id missing **")
         else:
             key = args[0] + "." + args[1]
-            if key not in models.storage.all():
+            if key not in storage.all():
                 print("** no instance found **")
             else:
-                print(models.storage.all()[key])
+                print(storage.all()[key])
 
     def do_destroy(self, arg):
         """
@@ -83,18 +87,23 @@ class HBNBCommand(cmd.Cmd):
                 del models.storage.all()[key]
                 models.storage.save()
 
-    def do_all(self, arg):
+    def do_all(self, class_name):
         """
-        Prints all string representation of all instances
+        Print all string representations of instances
         """
-        args = arg.split()
-        if len(args) > 0 and args[0] not in models.classes:
-            print("** class doesn't exist **")
+        if not class_name:
+            print([str(val) for val in storage.all().values()])
         else:
-            for key in models.storage.all():
-                if len(args) == 0 or args[0] == key.split('.')[0]:
-                    print(str(models.storage.all()[key]))
-
+            if class_name not in self.classes:
+                print("** class doesn't exist **")
+                return
+            result = [
+                    str(val)
+                    for key, val in storage.all().items()
+                    if key.startswith(class_name)
+                    ]
+            print(result)
+            
     def do_update(self, arg):
         """
         Updates an instance based on the class name and id
