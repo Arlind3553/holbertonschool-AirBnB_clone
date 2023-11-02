@@ -13,6 +13,7 @@ class Review(BaseModel):
     place_id = ""
     user_id = ""
     text = ""
+    
     def __init__(self, *args, **kwargs):
         """
         python3 -c 'print(__import__("my_module").my_function.__doc__)'

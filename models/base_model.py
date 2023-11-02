@@ -1,4 +1,8 @@
 #!/usr/bin/python3
+"""
+This script defines a BaseModel class for managing and persisting data.
+"""
+
 
 from datetime import datetime
 import uuid

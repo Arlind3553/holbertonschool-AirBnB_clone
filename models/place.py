@@ -5,10 +5,11 @@ This script defines a Place class that inherits from BaseModel.
 
 
 from models.base_model import BaseModel
+
+class Place(BaseModel):
     """
     python3 -c 'print(__import__("my_module").MyClass.__doc__)'
     """
-class Place(BaseModel):
     city_id = ""
     user_id = ""
     name = ""
@@ -21,10 +22,9 @@ class Place(BaseModel):
     longitude = 0.0
     amenity_ids = []
 
-     def __init__(self, *args, **kwargs):
+    def __init__(self, *args, **kwargs):
         """
         python3 -c 'print(__import__("my_module").my_function.__doc__)'
         python3 -c 'print(__import__("my_module").MyClass.my_function.__doc__)'
         """
         super().__init__(*args, **kwargs)
- 
