@@ -110,5 +110,5 @@ class HBNBCommand(cmd.Cmd):
             print("** instance id missing **")
             return
 
-    if __name__ == '__main__':
-        HBNBCommand().cmdloop()
+if __name__ == '__main__':
+    HBNBCommand().cmdloop()
