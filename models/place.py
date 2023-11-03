@@ -6,6 +6,7 @@ This script defines a Place class that inherits from BaseModel.
 
 from models.base_model import BaseModel
 
+
 class Place(BaseModel):
     """
     python3 -c 'print(__import__("my_module").MyClass.__doc__)'
