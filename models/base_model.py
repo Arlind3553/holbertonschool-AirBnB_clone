@@ -26,6 +26,7 @@ class BaseModel:
         from models import storage
         self.updated_at = datetime.now()
         storage.save()
+        return self.updated_at
 
     def __str__(self):
         return f"[{self.__class__.__name__}] ({self.id}) {self.__dict__}"
