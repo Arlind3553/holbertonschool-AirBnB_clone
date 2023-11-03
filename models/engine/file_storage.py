@@ -1,27 +1,27 @@
-#!usr/bin/python3
-'''
-FileStorage module for FileStorage class
-and its functionalities this class will be used
-to deserialiaze and serialize Models objects
-'''
+#!/usr/bin/python3
+"""
+This script defines the FileStorage class responsible for
+managing and persisting data objects.
+"""
+
 
 import json
-from models.user import User
 from models.base_model import BaseModel
+from models.user import User
 from models.state import State
 from models.city import City
 from models.amenity import Amenity
 from models.place import Place
 from models.review import Review
 
+
 class FileStorage:
     '''
-    FileStorage class
+    FileStorage class for managing objects and data.
     '''
-
-
-    __file_path = 'file.json'
-    __objects = {
+    __file_path = "file.json"
+    __objects = {}
+    classes = {
         "BaseModel": BaseModel,
         "User": User,
         "State": State,
@@ -33,42 +33,42 @@ class FileStorage:
 
     def all(self):
         '''
-        Instance method to return
-        objects dictionary
+        Returns the dictionary of stored objects.
         '''
-
         return FileStorage.__objects
 
     def new(self, obj):
         '''
-        Instance method to add obj created at
-        objects dictionary
+        Adds a new object to the storage dictionary.
         '''
-
         key = f"{obj.__class__.__name__}.{obj.id}"
         FileStorage.__objects[key] = obj
+        return True
 
     def save(self):
         '''
-        Instance method to serialize objects
-        to the JSON file: __file_path
+        Serializes the objects to a JSON file (__file_path).
         '''
-
-        obj_dictionary = {key: value.to_dict() for key,
-                          value in FileStorage.__objects.items()}
-        with open(FileStorage.__file_path, "w") as file:
-            json.dump(obj_dictionary, file)
+        data = {}
+        for key, obj in FileStorage.__objects.items():
+            data[key] = obj.to_dict()
+        with open(FileStorage.__file_path, 'w') as file:
+            json.dump(data, file)
+        return True
 
     def reload(self):
         '''
-        Instance method to deserialiaze file
+        Deserializes the JSON file and loads objects into the storage.
         '''
         try:
-            with open(FileStorage.__file_path, "r") as file:
+            with open(FileStorage.__file_path, 'r') as file:
                 data = json.load(file)
-                for key, value in data.items():
-                    cls_name, obj_id = key.split('.')
-                    obj = eval(cls_name)(**value)
-                    self.new(obj)
-        except Exception as e:
+            for key, value in data.items():
+                cls_name, obj_id = key.split('.')
+                if cls_name in self.__class__.classes:
+                    obj = self.__class__.classes[cls_name](**value)
+                    FileStorage.__objects[key] = obj
+            return True
+        except FileNotFoundError:
             pass
+            return False
