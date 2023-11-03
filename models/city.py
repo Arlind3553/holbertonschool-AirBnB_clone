@@ -1,7 +1,7 @@
 #!/usr/bin/python3
-    """
-    This script defines a City class that inherits from BaseModel.
-    """
+'''
+This script defines a City class that inherits from BaseModel.
+'''
 
 
 from models.base_model import BaseModel
