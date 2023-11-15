@@ -6,7 +6,8 @@ footer {
     display: flex;
     align-items: center;
     justify-content: center;
-    position: relative;
+    position: fixed;
+    bottom: 0;
 }
 
 footer p {
